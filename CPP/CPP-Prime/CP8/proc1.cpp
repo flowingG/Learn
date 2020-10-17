@@ -1,0 +1,39 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include "Sales_item.h"
+
+using std::istream;
+using std::ostream;
+using std::string;
+using std::cin;
+using std::cout;
+using std::endl;
+using std::ifstream;
+using std::ofstream;
+
+int main(int argc, char argv**)
+{
+	ifstream input(argv[1]);
+	ofstream output(argv[2]);
+	Sales_data total;
+	if(read(input, total))
+	{
+		Sales_data trans;
+		while(read(input, trans))
+		{
+			if(total.isbn() == trans.isbn())
+				total.combine(trans);
+			else
+			{
+				print(output, total) << endl;
+				total = trans;
+			}
+		}
+		print(output, total) << endl;
+	}
+	else
+	{
+		cerr << "No data" << endl;
+	}
+}
